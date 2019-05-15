@@ -1,0 +1,28 @@
+Docker Basic Commands
+
+docker run <image-name> 				--default command
+docker run <image-name> <override-command>		--any other command
+
+docker run = docker create + docker start
+docker create <image-name> 				--creates the container from the image
+docker start  <container-id>				--starts the container
+docker start -a <container-id> 				--start and attach to container to get the output from container
+
+
+docker ps						--list running containers
+docker ps --all						--list history of all containers ever run
+docker system prune					--removes stopped containers
+docker logs <container-id>				--get what happens in the container
+
+docker stop <container-id>				--signal terminate (graceful to cleanup and in your own time)
+docker kill <container-id>				--signal kill (shut down right now)
+
+docker exec -it <container-id> <command>		--execute commands in a running container (-it flag allows input)
+							<-i attaches terminal to stdin,-t prettyprint text>
+
+docker run -it <image-name> sh				--directly opens shell program on the container
+docker rm  <container-id>				--removes the individual container 
+docker rmi <image-id>					--removes the individual image
+
+
+

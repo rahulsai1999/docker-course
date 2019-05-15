@@ -1,0 +1,201 @@
+
+PS C:\Users\Rahul> docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+PS C:\Users\Rahul> docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+flaskdemo           latest              fd1ed5367e5e        39 hours ago        130MB
+<none>              <none>              ee56c700a6c9        39 hours ago        938MB
+<none>              <none>              0f7713ceea3c        39 hours ago        938MB
+python              3.7-stretch         32260605cf7a        2 weeks ago         929MB
+python              2.7-slim            99079b24ed51        5 weeks ago         120MB
+alpine              latest              caf27325b298        6 weeks ago         5.53MB
+hello-world         latest              fce289e99eb9        2 months ago        1.84kB
+
+PS C:\Users\Rahul> docker run python print("Hi")
+Unable to find image 'python:latest' locally
+
+PS C:\Users\Rahul> docker run python 3.7-stretch print("Hi")
+C:\Program Files\Docker Toolbox\docker.exe: Error response from daemon: OCI runtime create failed: container_linux.go:344: starting container process caused "exec: \"3.7-stretch\": executable file not found in $PATH": unknown.
+
+PS C:\Users\Rahul> docker run python3.7-stretch print("Hi")
+Unable to find image 'python3.7-stretch:latest' locally
+C:\Program Files\Docker Toolbox\docker.exe: Error response from daemon: pull access denied for python3.7-stretch, repository does not exist or may require 'docker login'.
+See 'C:\Program Files\Docker Toolbox\docker.exe run --help'.
+
+PS C:\Users\Rahul> docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: noneuser2183
+Password:
+Error response from daemon: Get https://registry-1.docker.io/v2/: unauthorized: incorrect username or password
+
+PS C:\Users\Rahul> docker run alpine ls
+bin
+dev
+etc
+home
+lib
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+sys
+tmp
+usr
+var
+
+PS C:\Users\Rahul> docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: noneuser2183
+Password:
+Login Succeeded
+
+PS C:\Users\Rahul> docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+PS C:\Users\Rahul> aws
+usage: aws [options] <command> <subcommand> [<subcommand> ...] [parameters]
+To see help text, you can run:
+
+  aws help
+  aws <command> help
+  aws <command> <subcommand> help
+aws: error: the following arguments are required: command
+
+PS C:\Users\Rahul> docker ps --all
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                        PORTS                  NAMES
+6f602f9dcad6        alpine              "ls"                     7 minutes ago       Exited (0) 7 minutes ago                             thirsty_thompson
+747ca72a1c60        python              "3.7-stretch print Hi"   8 minutes ago       Created                                              pensive_hopper
+6d531fa56c07        flaskdemo           "python app.py"          39 hours ago        Exited (255) 26 minutes ago   0.0.0.0:5000->80/tcp   laughing_curran
+
+PS C:\Users\Rahul> docker rm 6f602f9dcad6
+6f602f9dcad6
+
+PS C:\Users\Rahul> docker ps --all
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                        PORTS                  NAMES
+747ca72a1c60        python              "3.7-stretch print Hi"   16 minutes ago      Created                                              pensive_hopper
+6d531fa56c07        flaskdemo           "python app.py"          39 hours ago        Exited (255) 34 minutes ago   0.0.0.0:5000->80/tcp   laughing_curran
+
+PS C:\Users\Rahul> docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+PS C:\Users\Rahul> docker rm pensive_hopper
+pensive_hopper
+
+PS C:\Users\Rahul> docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+PS C:\Users\Rahul> docker ps --all
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                        PORTS                  NAMES
+6d531fa56c07        flaskdemo           "python app.py"     39 hours ago        Exited (255) 34 minutes ago   0.0.0.0:5000->80/tcp   laughing_curran
+
+PS C:\Users\Rahul> docker rm laughing_curran
+laughing_curran
+
+PS C:\Users\Rahul> docker ps --all
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+PS C:\Users\Rahul> docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+flaskdemo           latest              fd1ed5367e5e        39 hours ago        130MB
+<none>              <none>              ee56c700a6c9        39 hours ago        938MB
+<none>              <none>              0f7713ceea3c        39 hours ago        938MB
+python              3.7-stretch         32260605cf7a        2 weeks ago         929MB
+python              latest              32260605cf7a        2 weeks ago         929MB
+python              2.7-slim            99079b24ed51        5 weeks ago         120MB
+alpine              latest              caf27325b298        6 weeks ago         5.53MB
+hello-world         latest              fce289e99eb9        2 months ago        1.84kB
+
+PS C:\Users\Rahul> docker rmi ee56c700a6c9
+Deleted: sha256:ee56c700a6c910fdac0d9886a7d03acf884d097eec0777868607e26b76c04e00
+Deleted: sha256:0c05654d2ae42a1e8953bc367a0e7f23b9759b62637f0860f7e1d3a710a326e2
+Deleted: sha256:607bf158447227a5b760ffa91836f120cf6c05913eb8d1c124f0cfcdae37a3db
+Deleted: sha256:c68afbcb7b983acb5be57e4b29c827eb0cb6e91c4f3ebcf4f86fa5b7fd2ecc50
+Deleted: sha256:989328c3b6117552fc7c8a3464c93e262dbaa9b5076056229d41c8f986c4e89e
+Deleted: sha256:e23d138ca5eb0d57396885aa3c63eae0a577ca7db4ff3e7086a986b488474d3f
+
+PS C:\Users\Rahul> docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+flaskdemo           latest              fd1ed5367e5e        39 hours ago        130MB
+<none>              <none>              0f7713ceea3c        39 hours ago        938MB
+python              3.7-stretch         32260605cf7a        2 weeks ago         929MB
+python              latest              32260605cf7a        2 weeks ago         929MB
+python              2.7-slim            99079b24ed51        5 weeks ago         120MB
+alpine              latest              caf27325b298        6 weeks ago         5.53MB
+hello-world         latest              fce289e99eb9        2 months ago        1.84kB
+
+PS C:\Users\Rahul> docker rmi 0f7713ceea3c
+Deleted: sha256:0f7713ceea3cb990aaa130b76308100b89156f91271b91d9f037f2da9cf1cbfc
+Deleted: sha256:62cfaadbcab36d1e8592723787339055fcd0a99513da6ff96b0bc099657fdcf4
+Deleted: sha256:ad56488f4ba2f78509d055302d74f7c5eba3e41f4044f2ff2c5f9104eb2bf10f
+Deleted: sha256:0f6f60dc772605c5c84504a44e47f0c6181a551acd601f882f45e676c21d45c0
+Deleted: sha256:f3ee7b6391b347eeb980502dc19ccf13afe49d47ba26589e502d5a65b73f5912
+Deleted: sha256:02bb234562794bb848fcf449566b87b168a37517bdf1bce5b1738262a62b9196
+Deleted: sha256:c339497df0b1929be0541613258af2a6cf8a0a7c5ecbb3d5125dd0e916e467d9
+
+PS C:\Users\Rahul> docker run python:3.7-stretch print("Hello")
+Error: no such file "Hello"
+
+PS C:\Users\Rahul> docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+PS C:\Users\Rahul> docker ps --al
+unknown flag: --al
+See 'docker ps --help'.
+
+PS C:\Users\Rahul> docker ps --all
+CONTAINER ID        IMAGE                COMMAND             CREATED             STATUS                      PORTS               NAMES
+c37e626e9d2f        python:3.7-stretch   "print Hello"       15 seconds ago      Exited (2) 16 seconds ago                       mystifying_noyce
+
+PS C:\Users\Rahul> docker rm  mystifying_noyce
+mystifying_noyce
+
+PS C:\Users\Rahul> docker ps --all
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+PS C:\Users\Rahul> docker run python:3.7-stretch
+
+PS C:\Users\Rahul> docker run python:3.7-stretch -a
+C:\Program Files\Docker Toolbox\docker.exe: Error response from daemon: OCI runtime create failed: container_linux.go:344: starting container process caused "exec: \"-a\": executable file not found in $PATH": unknown.
+
+PS C:\Users\Rahul>   docker run python
+
+PS C:\Users\Rahul> docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+PS C:\Users\Rahul> docker run -it python:3.7-stretch sh
+# print("Hello")
+sh: 1: Syntax error: word unexpected (expecting ")")
+# print
+# 1 or 0
+sh: 2: 1: not found
+# python
+Python 3.7.2 (default, Mar  5 2019, 06:22:51)
+[GCC 6.3.0 20170516] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 1 or 0
+1
+>>>
+KeyboardInterrupt
+>>>
+#
+
+PS C:\Users\Rahul> docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+PS C:\Users\Rahul> docker ps -all
+CONTAINER ID        IMAGE                COMMAND             CREATED              STATUS                      PORTS               NAMES
+f3a1e1dbdecf        python:3.7-stretch   "sh"                About a minute ago   Exited (0) 49 seconds ago                       unruffled_swanson
+
+PS C:\Users\Rahul> docker rm unruffled_swanson
+unruffled_swanson
+
+PS C:\Users\Rahul> docker ps -all
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
+22ef2c8912b9        python              "python3"           9 minutes ago       Exited (0) 9 minutes ago                       nifty_brown
+
+PS C:\Users\Rahul> docker rm nifty_brown
+nifty_brown 
