@@ -1,0 +1,20 @@
+Keywords:
+
+FROM <baseimage>
+
+RUN <commands>
+
+CMD <executable command>  
+example: CMD ["npm","start"]
+
+COPY <path source(local file system)> <path destination(container)> 
+example : COPY ./ ./  # copies current working directory
+# split COPY commands to minimize cache busting and unneccesary rebuilds
+
+WORKDIR <path relative to container> # all following commands are done relative to the folder
+
+
+Commands:
+
+# Port Mapping (strictly run-time)
+docker run -p <port on machine> : <port on container> image_name
