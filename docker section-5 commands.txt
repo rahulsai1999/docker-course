@@ -1,0 +1,29 @@
+App structure => Redis database and Node app responding to request
+
+Docker compose automates some of the long arguments passed to docker run. A seperate CLI that parses the commands.
+It contains the information about the containers that have to be run when the image is run.
+
+important : The client name inside the database client is automatically connected due to Docker-Compose.yml.
+
+Compose file:
+
+version: '3'
+services:
+  redis-server:
+    image: 'redis'
+  node-app:
+    build: .
+    ports: 
+      - "8080:8080"
+
+# services are containers here
+# port mapping syntax as usual
+# restart policy : 'no', always, on-failure(error code other than 0), unless-stopped
+
+Compose commands: 
+
+docker-compose up 	  	--> running the built image 
+docker-compose up --build  	--> rebuild and run
+docker-compose up -d		--> run in background
+docker-compose down             --> stop the containers (current directory) refers to the compose.yml
+
