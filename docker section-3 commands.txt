@@ -1,0 +1,29 @@
+Dockerfile : contains configuration for the container
+-> Specify base image
+-> Install additional programs
+-> Specify command to run on startup
+
+1. Make the Dockerfile (folder attached)
+
+2. Run docker build . 
+(for adding a tag)=> docker build -t <dockerid>/<ProjectName>:<version> (usually latest) .
+
+3. Image is built
+
+** For each step (after the base image)in the docker build process: 
+1. intermediate containers are built 
+2. file system snapshots taken and saved as image
+3. intermediate container removed
+
+** The performance of the building process is enhanced by the caching of the file system snapshots (order of commands matters A LOT!-- any changes should be done below for rebuilding image from Dockerfile)
+
+** docker commit is used to create a intermediate usable image for future use (like VM Snapshots)
+docker commit <container-id> -options (-c '<executable similar to Dockerfile>')
+
+Keywords:
+
+FROM <baseimage>
+
+RUN <commands>
+
+CMD <command on startup>
