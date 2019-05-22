@@ -1,0 +1,36 @@
+Production Grade Workflow
+
+Development-> Testing -> Deployment
+
+npm start -> Starts the development server.
+npm run build -> Bundles the app into static files for production.
+npm test -> Starts the test runner.
+
+Make two Dockerfiles 
+
+1. Development - Dockerfile.dev
+
+docker build -f Dockerfile.dev .
+docker run -p 3000:3000 <imageid>
+
+Problem  : any change in source code, image has to be rebuilt
+Solution : Docker Volumes ( simple terms => mapping from inside the container to outside) basically a reference to local folder.
+
+Docker Volume commands
+
+docker run -p 3000:3000  -v /app/node_modules 	   -v $(pwd):/app            <imageid>
+			 this is bookmark only     this is actual volume
+
+To avoid this all use docker compose
+
+version: '3'
+services:
+  web:
+    build:
+	context: .
+	dockerfile: Dockerfile.dev
+    ports: 
+      - "3000:3000"
+    volumes: 
+      - /app/node_modules
+      - .:/app
