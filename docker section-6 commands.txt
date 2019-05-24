@@ -34,3 +34,31 @@ services:
     volumes: 
       - /app/node_modules
       - .:/app
+
+2. Testing
+
+First Approach:
+
+docker-compose up
+docker exec -it <container-id> <command> in this case npm run start
+
+Second Approach:
+Dedicated testing service for testing in docker-compose.yml
+
+tests:
+    build:
+      context: .
+      dockerfile: 'Dockerfile.dev'
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm","run","test"]
+
+3. Production Phase (Deployment-I)
+ 
+Multi-Step Docker builds
+Build Phase : using the node image to execute the build and get the directory with the static assets
+Run Phase: using the NGINX image to run the production build by copying the build directory.
+
+
+
