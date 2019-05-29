@@ -1,0 +1,48 @@
+Making Travis.yml to :
+
+1. Keep a copy of docker running.
+2. Build image with Dockerfile.dev (Testing is in dev)
+3. Travis test suite running
+4. Deploy on AWS
+
+
+example travis.yml (just for CI)
+
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t rs83/doc-react -f Dockerfile.dev .
+
+script:
+  - docker run rs83/doc-react npm test -- --coverage
+
+example travis.yml (for CI and CD)
+
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t rs83/doc-react -f Dockerfile.dev .
+
+script:
+  - docker run rs83/doc-react npm test -- --coverage
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "next-sample"
+  env: "docker-env"
+  bucket_name: "elasticbeanstalk-us-east-1-690844169827"
+  bucket_path: "docker"
+  on:
+    branch: master
+  access_key-id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure : "$AWS_SECRET_KEY"
+
+s
