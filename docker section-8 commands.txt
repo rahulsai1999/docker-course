@@ -1,0 +1,43 @@
+Multicontainer Application
+
+Nginx - Routing
+
+Express-Server 
+=> Worker with Redis   -- values i calculated (worker process calculates and redis stores index and value
+=> Postgres (SQL)      -- values i have seen (permanent data storing indices)
+
+React- Server 
+=> Front-end part 
+
+Docker Compose file as defined in the project for hosting the =>
+1. Redis
+2. Postgres
+3. Client - React
+4. Server - Express
+5. Worker - Javascript Calculator
+
+default.conf => Nginx config file.
+1. tells nginx 3000 port for client, 5000 for server
+2. Listens on ports 80. (localhost:3050) / redirects to client. /api redirects to server
+
+Error: Websockets in development
+Write extra config for the sockjs-node stuff
+
+---------------------------------------------------------------
+
+CI for multiple images
+
+1. Push code to github
+2. Travis pulls repo from Github
+3. Travis builds test image (for client only)
+4. Travis build prod images (client,server,nginx,worker)
+5. Travis pushes to DockerHub (login to dockerhub and push) echo "$docpass" | docker login -u "$docid" --password-stdin
+
+----------------------------------------------------------------
+
+CD for multiple images
+
+1. Use a Dockerrun.aws.json file to start the ECS Task Definition.
+2. Understand the above file which acts as equivalent to docker-compose in production.
+3. We use a VPC(Virtual Private Cloud) to get the Nginx container, Postgres(RDS) and Redis(ElastiCache)
+4. Configure Security Groups, Memory and Environment Variables to proceed.
