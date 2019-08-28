@@ -1,0 +1,51 @@
+kubectl cluster-info        				--> shows the information about the current cluster
+kubectl apply -f <filename> 				--> to change the current config of the cluster
+kubectl delete -f <filename>				--> to delete the thing from the cluster
+kubectl get <objects>       				--> to get the status of the objects (pods services etc.)
+kubectl describe <object-type> <object-name> 		--> to get detailed info
+
+difference between docker-compose and Kubernetes
+
+docker-compose
+services:
+ nginx   
+   build      --> images have to be already built for Kubernetes cluster  --> host image on dockerhub           
+   ports      --> one config file per object we want to create		  --> make one config file for the container
+ worker	      --> manual setup of networking				  --> make one config file to set up network
+   build
+   ports
+ client
+   build
+   ports
+
+Files made:
+client-pod.yaml         -->  makes the object as mentioned above (pod)
+client-node-port.yaml   -->  sets up the manual networking required
+
+Details on the yaml files:
+
+apiVersion: each API version defines a different set of objects as mentioned below
+
+Object: things in a node of a cluster
+
+Object types(mentioned in kind section of the yaml): StatefulSet , ReplicaController , Pod , Service
+ - Pod: the smallest thing that runs > 1 containers which have similar purposes (may have primary and support cont)
+ - Deployments: runs a set of identical pods (good for production)
+ - Service: sets up networking in a Kubernetes cluster
+    subtypes=> ClusterIP, NodePort, LoadBalancer, Ingress
+    	NodePort = provides a proxy for a pod after kubeproxy (the only single window) 
+
+** Services are linked to the Pods using the selector(on service file) and label(on pod file) 
+   The key-value pairs should be equal. 
+   The service(nodeport) will find every object(pods) with label component:web or any other pair and expose it's port 3000
+
+----------------------------------------------------------------------------------------------------------
+
+Imperative Deployments  ==> steps to arrive at a container setup    (more human effort)
+Declarative Deployments ==> setup should look like this, take steps (more of master's effort)
+
+----------------------------------------------------------------------------------------------------------
+
+Imperative deployment is used to deploy a newer version as you cannot be changing the image inside a Deployment again and again.
+=> Make your changes and assign a new version number, push to Docker Hub
+=> kubectl set image <object-type>/<object-name><container_name>=<new image to use>

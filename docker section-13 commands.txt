@@ -1,0 +1,38 @@
+Imperative deployment steps: 
+Run a command to list out current running pods -> Run a command to update the current pod to use the new image
+
+Declarative deployment steps:
+Update our config file originally used -> Throw the updated config file into kubectl
+** if the name in the metadata section is the same, it will update the same object.
+** if the name in the metadata section is different, it will create a brand new object.
+
+to check if the change went fine:
+kubectl describe <object-type> <object-name>  --> to get detailed info
+
+Limitations:
+- not allowed to chage fields other than the container image, active deadline seconds and toleration once pod is created
+
+--------------------------------------------------------------------------------------------------------------------
+To avoid this limitation we use another type of objects called Deployments
+
+- Deployment is an object that maintains a set of identical pods, ensuring that they have the correct config and that the right number exists.
+- Monitors the state of each pod, updating as necessary, great for dev and production
+- Deployment object contains a pod template. It can create new pods from this or update the pods with this either directly or by killing off old pods and running new ones. Properties- no.of containers,name,port,image
+
+How Deployment works?
+It has the aforementioned template. It contacts the KubeMaster API and asks it to create the pods and identifies them with the matchLabels key-value pair.
+
+--------------------------------------------------------------------------------------------------------------------
+Scaling and changing deployments
+- replicas change number to get more pods
+- tagging build images with a version number for declarative deployment (adds an extra step to the production deployment)
+- imperative deployment ->  kubectl set image <object-type>/<object-name> <container-name>=<new-image>
+
+--------------------------------------------------------------------------------------------------------------------
+Playing with two Dockers: ie. Docker local and Docker virtual(inside k8s cluster)
+
+Just do it from settings (or) eval $(docker-desktop docker-env)
+This is for-
+1. Debugging images using docker logs or exec -it to get the state of the container. (can also use kubectl)
+2. Manually kill containers to test K8s self-heal
+3. Delete cached images in the node(system prune)
