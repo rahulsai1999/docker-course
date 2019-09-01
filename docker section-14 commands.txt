@@ -1,0 +1,42 @@
+Dataflow:
+Traffic-> Ingress Service -> ClusterIPService -> Deployment of anything-> Pods
+
+Workflow:
+Create config files for everything -> test on local -> GitHub and Travis CI/CD flow -> Deploy App
+
+ClusterIPService: Exposes a set of pods to other objects in the cluster (more restrictive)
+NodePort: Exposes a set of pods to the outside world
+
+** Can combine seperate files into single (clusterIP and deployment) --> seperate with ---
+
+--------------------------------------------------------------------------------------------------------------------
+
+Databases and Persistent Volumes:
+
+- Why? : Postgres or any database maintains data into a file system. If the container inside pod crashes, the data is also lost.
+
+- How? : The Postgres container inside the pod writes to the volumes on host machine(hard disk). Don't increase the replicas of Postgres as accessing the same volume from different containers may be disastrous.
+
+- Volume in Kubernetes: An object allowing a container to store data at the pod level.(different from Docker Volumes) If a pod is somehow deleted or recreated, the data associated with the volume inside the pod also goes away.
+
+- Persistent Volume in K8s : An object allowing a container to store data outside the pod level.(longtime-durable)
+
+- Persistent Volume Claim (PVC) : provides options for Statically or Dynamically provisioned Persistent Volume. 
+This is attached to a pod-config(doesn't allocate the requested storage). K8s sees this and checks for Static Prov PVs. If not, it creates on-the-fly Dynamic prov PV for the requested requirement and allocates an instance of the storage.
+Three access modes:
+ReadWriteOnce-> can be used by a single node
+ReadOnlyMany-> multiple nodes can read from this
+ReadWriteMany-> can be read and written to by many nodes
+
+Where does it store? : It creates a slice of yout hard drive using a provisioner ( kubectl get storageclass )
+Read the k8s docs about the storage class to know more about the specific config required for the cloud storage providers
+
+--------------------------------------------------------------------------------------------------------------------
+Designating a PVC into the pod template: 
+mention the volume part inside the spec section and put the PVC details there. (see postgres-deployment.yaml)
+once assigned, use the same key-value pair inside volumeMount with the mountPath
+--------------------------------------------------------------------------------------------------------------------
+Environment variables:
+
+
+
