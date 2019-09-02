@@ -38,5 +38,29 @@ once assigned, use the same key-value pair inside volumeMount with the mountPath
 --------------------------------------------------------------------------------------------------------------------
 Environment variables:
 
+multi-worker needs: REDIS_HOST and REDIS_PORT
+multi-server needs: PGHOST,PGUSER,PGDATABASE,PGPORT,PGPASSWORD
 
+for PGPASSWORD: use an imperative command to create the secret
+kubectl create secret generic <secret-name> --from-literal key=value
+--------------------------------------------------------------------------------------------------------------------
 
+Load Balancer Service: legacy way of getting network traffic into the cluster from outside.
+-> allows access to one specific set of pods only. -> provisioned externally and automatically
+
+--------------------------------------------------------------------------------------------------------------------
+
+Ingress Controllers: exposes a set of services to the outside world. (outside to the clusterIP)
+-> several implementations (using ingress-nginx here not kubernetes-nginx)
+-> setup of ingress-nginx changes according to each environment.
+-> basic idea is that the ingress controller gets our desired state(routing rules to get traffic to services) from the ingress config and the it creates a pod running nginx that handles routing.
+-> ingress also creates a default backend pod(deployment and clusterIP) to get the health status of the cluster
+-> advantage is the extra features as opposed to confugring a nginx pod by ourself. Directly routes traffic to the pods enabling sticky sessions(same user,request goes to same server again)
+
+Traffic -> Google Cloud Load Balancer -> Load Balancer Service (Powered by ingress-nginx ) ie. a load balancer service and a nginx controller deployment
+
+Install Ingress (local): 
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud-generic.yaml
+
+Configuration file : ingress-service.yaml
